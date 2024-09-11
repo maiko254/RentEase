@@ -6,6 +6,7 @@ dotenv.config();
 class RedisClient {
   constructor() {
     this.client = createClient();
+    this.client.connect();
     this.client
       .on('error', (error) => {
         console.log('Error connecting to Redis:', error);
