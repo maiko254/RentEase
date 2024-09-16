@@ -5,27 +5,29 @@ dotenv.config();
 
 class DBClient {
   constructor() {
-    /**const host = process.env.DB_HOST || 'localhost';
-    const port = process.env.DB_PORT || 27017;
-    const dbName = process.env.DB_DATABASE || 'files_manager';
-    const uri = `mongodb://${host}:${port}`;*/
     this.isConnected = false;
 
     this.client = new MongoClient(process.env.MONGO_URI);
-    this.client.connect();
-    this.db = this.client.db(process.env.DB_NAME);
-
-    this.client.on('connect', () => {
+    this.client.connect().then(() => {
       this.isConnected = true;
-    });
-    this.client.on('error', (err) => {
-      console.error(err);
+      console.log('Connected to the database');
+    })
+    .catch((err) => {
       this.isConnected = false;
+      console.log(`Error connecting to the database: ${err.message}`);
     });
+    this.db = this.client.db(process.env.DB_NAME);
   }
 
-  async connect() {
-    await this.client.connect();
+  connect() {
+    this.client.connect().then(() => {
+      this.isConnected = true;
+      console.log('Connected to the database');
+    })
+    .catch((err) => {
+      this.isConnected = false;
+      console.log(`Error connecting to the database: ${err.message}`);
+    });
   }
 
   isAlive() {
