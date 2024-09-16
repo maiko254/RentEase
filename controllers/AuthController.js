@@ -7,23 +7,27 @@ class AuthController {
   static async getConnect(req, res) {
     const authHeader = req.header('Authorization');
     if (!authHeader) {
+      console.log('no auth header');
       return res.status(401).json({ error: 'Unauthorized' });
     }
     const [email, password] = Buffer.from(authHeader.split(' ')[1], 'base64').toString('utf-8').split(':');
     if (!email || !password) {
+      console.log('no email or password');
       return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
         const user = await dbClient.db.collection('users').findOne({ email });
         if (!user) {
+          console.log('no user');
           return res.status(401).json({ error: 'Unauthorized' });
         }
         const hashedPassword = sha1(password);
         if (user.password !== hashedPassword) {
+          console.log('wrong password');
           return res.status(401).json({ error: 'Unauthorized' });
         }
         const token = uuid();
-        const tokenExpiration = 60 * 60 * 24 * 1000;
+        const tokenExpiration = 60 * 60 * 24;
         await redisClient.set(`auth_${token}`, user._id.toString(), tokenExpiration);
         return res.status(200).json({ token });
     } catch (error) {
