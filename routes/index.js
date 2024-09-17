@@ -3,6 +3,7 @@ import AppController from '../controllers/AppController.js';
 import UsersController from '../controllers/UsersController.js';
 import AuthController from '../controllers/AuthController.js';
 import PropertyController from '../controllers/PropertyController.js';
+import UnitController from '../controllers/UnitController.js';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.get('/properties/:id', PropertyController.getPropertyById);
 router.put('/properties/:id', PropertyController.updateProperty);
 router.delete('/properties/:id', PropertyController.deleteProperty);
 router.get('/properties/user/:id', PropertyController.getPropertyByOwnerId);
-router.post('/properties/:id/apartments', PropertyController.createApartment);
-router.get('/properties/:id/apartments', PropertyController.getApartments);
+router.post('/properties/:propertyId/apartments', UnitController.createApartment);
+router.get('/properties/:propertyId/apartments', UnitController.getApartmentsByPropertyId);
 
 export default router;
