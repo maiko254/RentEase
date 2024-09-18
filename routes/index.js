@@ -18,7 +18,10 @@ router.get('/properties/:id', PropertyController.getPropertyById);
 router.put('/properties/:id', PropertyController.updateProperty);
 router.delete('/properties/:id', PropertyController.deleteProperty);
 router.get('/properties/user/:id', PropertyController.getPropertyByOwnerId);
-router.post('/properties/:propertyId/apartments', UnitController.createApartment);
-router.get('/properties/:propertyId/apartments', UnitController.getApartmentsByPropertyId);
+router.post('/properties/:propertyId/units', UnitController.createUnit);
+router.get('/properties/:propertyId/units', UnitController.getUnitsByPropertyId);
+router.put('/properties/units/:unitId', UnitController.updateUnit);
+router.delete('/properties/units/:unitId', UnitController.deleteUnit);
+
 
 export default router;
