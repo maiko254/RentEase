@@ -35,7 +35,7 @@ class UnitController {
         propertyId: new ObjectId(propertyId),
         unit_number,
         floor,
-        price,
+        price: parseInt(price, 10),
         bedrooms,
         bathrooms,
       });
